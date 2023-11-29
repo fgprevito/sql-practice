@@ -1,0 +1,61 @@
+select shrcode, shrfirm
+from shares;
+
+
+select *
+from shares
+where shrprice < 15;
+
+
+select shrcode, shrfirm, shrprice
+from shares
+where shrprice >= 10;
+
+
+select shrfirm, shrprice, shrqty, (shrqty * shrprice) as 'Total Value'
+from shares
+order by 4 desc;
+
+
+select shrfirm, (shrdiv / shrprice) as 'Yield'
+from shares
+where (shrdiv / shrprice) > .05;
+
+
+select (shrdiv * shrqty) as 'Total Dividend Payment'
+from shares
+where shrfirm = 'Patagonian Tea';
+
+
+select shrcode, shrfirm, shrprice
+from shares
+where shrprice < (20 * shrdiv);
+
+
+select shrcode, shrpe, (shrqty * shrprice) as 'Total Value'
+from shares
+where shrpe > 10;
+
+
+select shrcode, shrfirm, sum(shrqty * shrprice) as 'Combined Total Value'
+from shares
+where shrfirm in ('Abyssinian Ruby', 'Sri Lankan Gold');
+
+
+select shrcode, shrfirm, sum(shrdiv / shrprice) as 'Combined Total Yield'
+from shares
+where shrfirm not in ('Bolivian Sheep', 'Canadian Sugar');
+
+
+select shrcode, shrfirm, sum(shrqty * shrprice) as 'Combined Total Value'
+from shares;
+
+
+select shrcode, shrfirm
+from shares
+where shrcode like 'B%';
+
+
+select *
+from shares
+where shrfirm like '%Gold%';

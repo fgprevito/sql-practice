@@ -1,0 +1,103 @@
+Intro to SQL - DDL
+
+#create statements
+
+create shema CustomerDB;
+
+#Now we have place to start creating database
+
+create table - defines new table and its columns
+
+Steps in table creation:
+1) Identify data types for attributes
+2) identify columns that can and cant be null
+3) identify primary key-foreign key mates
+4) determine default values
+5) identify constraints on columns (domain specifications)
+6) create table and associated indexes
+
+----------------------------------------------------------------------
+
+Datatypes:
+boolean, datetime, decimal, integer, char, varchar
+
+----------------------------------------------------------------------
+
+create table Customer (
+CustomerID integer not null,
+CustomerFirstName varchar(35) not null,
+CustomerMiddleName varchar(35),
+CustomerLastName varchar(35) not null,
+CustomerState char(2) not null,
+constraint Customer_PK primary key (CustomerID));
+
+create table Orders (
+OrderID integer not null,
+OrderDate datetime default current_timestamp not null,
+CustomerID integer not null,
+constraint Order_PK primary key (OrderID),
+constraint Order_FK foreign key (CustomerID) references Customer(CustomerID));
+
+create table Product (
+ProductID interger not null,
+ProductName varchar(50) not null,
+ProductDescription varchar(250) not null,
+ProductStandardPrice decimal (6,2) not null,
+constriant Product_PK primary key (ProductID));
+
+create table OrderLine (
+OrderID integer not null,
+ProductID integer not null,
+OrderedQuantity integer not null,
+constraint OrderLine_PK primary key (OrerID, ProductID),
+constraint OrderLine_FK1 foreign key (OrderID) references Orders(OrderID),
+constraint OrderLine_FK2 foreign key (ProductID) references Product(ProductID));
+
+-------------------------------------------------------------------------
+
+auto increment 
+
+create table Customer (
+CustomerID integer not null auto_increment,
+...........
+...........);
+
+----------------------------------------------------------------------------
+
+referential integrity - enforced via primary key to foreign key match and can be maintained by adding these to end of foreign key constraint:
+
+on [update | delete] [restrict | cascade | set null]
+restrict - you cant delete customer #4 bc theres related orders in orders table
+cascade - sure you can delete but it will also delete all orders in orders table by customer 4
+set null - sure you can delete but it will set customer ID in orders table to null for all customer 4 orders
+
+always on foreign key constriant, not on primary key
+
+ex.
+constraint Order_FK foreign key (CustomerNum) references Customer(CustomerNum) on delete cascade
+
+--------------------------------------------------------------------------------
+
+Another way to create tables - this will copy another tables structure but only for certain values
+
+ex.
+create table TexCustomers as
+select *
+from Customers
+where CustomerState = 'TX';
+
+this will copy customer table structure and add all values only for customers from TX
+
+----------------------------------------------------------------------------------
+
+drop table: eradicates table from memory of mankind. Gets rid of data, structure, table has never existed. No safety net, no backing out of it. Doesnt matter how much data you have it will erase everything forever. You can drop schema too
+
+drop table Customer;
+
+truncate: removes all records but you keep table structure and constraints. basically empties table of its content. Useful when office is doing agile where they constantly load new data and train on it
+
+truncate table Customer;
+
+rename table allows you to rename tables. Constraints will get updated as well so dont worry
+
+rename table Customers to Customer;

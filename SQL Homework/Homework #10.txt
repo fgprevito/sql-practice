@@ -1,0 +1,70 @@
+a)
+select SHRCODE, SHRFIRM
+from SHARES;
+
+select shrcode as 'Share Code', shrfirm as 'Share Firm'
+from shares
+order by shrcode;
+
+b)
+select *
+from SHARES
+where SHRPRICE > 15;
+
+select *
+from shares
+where shrprice < 15;
+
+c) 
+select SHRFIRM, SHRPRICE
+from SHARES
+where SHRPRICE >= 10;
+
+select shrcode as 'Share Code', shrfirm as 'Firm Name', shrprice as 'Share Price'
+from shares
+where shrprice >= 10;
+
+d)
+select SHRFIRM, SHRPRICE, SHRQTY, (SHRQTY * SHRPRICE) as TOTAL VALUE OF SHARES
+from SHARES
+order by (SHRQTY * SHRPRICE) desc;
+
+select shrfirm as "Firm Name', shrprice as 'Share Price', shrqty as 'Share Quantity', (shrqty * shrprice) as 'Total Value of Shares'
+from shares
+order by 4 desc;
+
+e)
+select SHRFIRM
+from SHARES
+where (SHRDIV/SHRPRICE) > .05;
+
+select shrfirm as 'Firm Name', (shrdiv / shrprice) as 'Yield'
+from shares
+where (shrdiv / shrprice) > .05;
+
+f)
+select SHRDIV * SHRQTY as 'TOTAL DIVIDEND PAYMENT'
+from SHARES
+where SHRFIRM = 'Patagonian Tea';
+
+select as 'Firm Name', (shrdiv * shrqty) as 'Total Dividend Payment'
+from shares
+where shrfirm = 'Patagonian Tea';
+
+g)
+select *
+from SHARES
+where SHRPRICE < (SHRDIV * 20);
+
+select shrcode, shrfirm, shrprice, (20 * shrdiv) as 'Twenty Times Dividend'
+from shares
+where shrprice < (20 * shrdiv)
+
+h)
+select (SHRQTY * SHRPRICE) as TOTAL VALUE
+from SHARES
+where SHRPE > 10;
+
+select shrcode, shrfirm, shrpe, (shrqty * shrprice) as 'Total Value'
+from shares
+where shrpe > 10;

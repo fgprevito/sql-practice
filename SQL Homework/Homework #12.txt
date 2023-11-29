@@ -1,0 +1,51 @@
+d)
+select count(donorno) as '# of people who gave gifts in 2012'
+from gift
+where year = 2012;
+
+select count(distinct donorno) 
+
+e)
+select sum(amount) as 'Amount Donated in 2013'
+from gift
+where year = 2013;
+
+f)
+select avg(amount) as 'Average Amount in Donation'
+from gift
+where year in (2012, 2013, 2014);
+
+where year between 2012 and 2014;
+
+g)
+delete from donor, gift
+where donorno = 117;
+
+delete from gift
+where donorno = 117;
+
+delete from donor
+where donorno = 117;
+
+#Delete child records first then parent records
+
+h)
+update donor
+set dphone = '555-1234'
+where donorno = 111;
+
+where dfname = 'Michelle'
+and dlname = 'Dishman';
+
+i)
+insert into donor 
+values (120, 'Previto', 'Francesco', '2096168', 'TX', 'College Station');
+
+j)
+rename table Gift to Donation;
+
+k)
+truncate table Year;
+
+delete from Year;
+

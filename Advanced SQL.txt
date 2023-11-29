@@ -1,0 +1,90 @@
+join - combines 2 or more table into single table view
+
+inner join (equijoin) - join condition based on equality of values in the common columns
+
+newer safer join method
+
+For each customer who placed an order, whats the customer's name and order number?
+
+select c.CustomerID, CustomerName, OrderID
+from Customer c join Order o
+on c.CustomerID = o.CustomerID
+order by OrderID;
+
+watch out for multiplicative affect of join. Above if you joined and one customer placed 3 orders you would get their name and ID 3 times with the different orders
+
+------------------------------------------------------------------------------------
+
+older join method using where clause
+
+For each customer who placed an order, whats the customer's name and order number?
+
+select c.CustomerID, CustomerName, OrderID
+from Customer c, Order o
+where c.CustomerID = o.CustomerID
+order by OrderID;
+
+if you select mutliple tables without join, its called cross join or cartesian product 
+
+--------------------------------------------------------------------------------
+
+joining several tables with join clause 
+
+assemble all info necessary to create onvoice for order number 1006
+
+select ...
+from Customer c
+join Order o on c.customerID = o.customerID
+join OrderLine ol on o.orderID = ol.orderID
+join Product p on ol.productID = p.productID
+and o.orderID = 1006;
+
+select... 
+from customer c, order o, orderline ol, product p
+where c.customerID = o.customerID
+and o.orderID = ol.orderID
+and ol.productID = p.productID
+and o.orderID = 1006;
+
+-------------------------------------------------------------------------------
+
+outer join - rows that dont have matching values are included in results
+- everything from one table and some stuff from another
+
+list customer name, ID, order num for all customers. include customer info even for customers that dont have an order
+
+select c.customerid, customername, orderid
+from customer left outer join order
+on c.customerid = o.customerid
+order by orderid;
+
+----------------------------------------------------------------------------
+ 
+self join - involves unary relationships
+
+show emp ID and name of each emp along with name of supervisor
+
+select e.employeeID, e.employeeName, m.employeeName as 'Manager'
+from employee e join employee m
+on e.supervisor = m.employeeID; = employee's supervisor is the managers ID
+
+------------------------------------------------------------------------
+
+subquery - placing inner query (select statement) inside outer query
+
+options - in condition of the where clause
+- within the having clause
+
+can be correlated or uncorrelated
+- uncorrelated - executed once for entire outer query
+
+if subquery can run on its own, its uncorrelated
+
+ex. show all customer who have placed an order
+
+select CustomerName
+from Customer
+where CustomerID in
+(select distinct CustomerID
+from order);
+

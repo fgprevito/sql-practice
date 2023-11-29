@@ -1,0 +1,59 @@
+-- A X
+select donorno, dfname, dlname, dphone
+from donor
+where donorno = 112;
+
+-- B O
+select count(donorno) as '# of donors'
+from donor;
+
+-- C O
+select donorno, concat(dlname, ', ', dfname) as 'Donor Name'
+from donor;
+
+-- D X
+select count(distinct donorno) as '# of donors', year
+from gift
+where year = 2012
+
+-- E X
+
+select year, sum(amount) as 'Amount Donated'
+from gift
+where year = 2013;
+
+-- F X (remember between syntax)
+
+select year, avg(amount)
+from gift
+where year between 2012 and 2014;
+
+-- G X
+
+-- if it is set up with cascade deletes you can do this
+delete from donor
+where donorno = 117;
+
+-- if not, delete from child recorsd first, then parent record
+
+-- H X(answer question based on information given)
+
+update Donor
+set dphone = 5551234
+where dfname = 'Michelle'
+and dlname = 'Dishman';
+
+-- I O(desc donor would describe table information)
+
+insert into Donor values
+(120, 'Previto', 'Francesco', '5550987', 'TX', 'Fort Worth');
+
+-- J X
+
+rename table Gift to Donation;
+
+-- K X
+
+truncate table Year;
+
+delete from Year;

@@ -1,0 +1,26 @@
+e)
+select count(distinct customerid), region, orderID, productID, latin Name
+from customers c
+join orders o on c.customerid = o.customerid
+join order details d on o.orderid = d.orderid
+join products p on d.productid = p.productid
+and latin name like 'L%'
+group by region; 
+
+f)
+select count(distinct employeeid), postalcode, orderid, productid, latin name
+from employee e
+join order o on e.employeeid = o.employeeid
+join order details d on o.orderid = d.orderid
+join product p on d.productid = p.productid
+and latin name is null
+group by postalcode;
+
+g)
+select customerid, region, orderid, productid, product name, (unit price * units on order) as 'Revenue Generated' 
+from customers c
+join orders o on c.customerid = o.customerid
+join order details d on o.orderid = d.orderid
+join products p on d.productid = p.productid
+group by region
+having max(unit price * units on order);

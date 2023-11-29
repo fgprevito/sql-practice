@@ -1,0 +1,43 @@
+e)
+select d.donorno, dfname, dlname, avg(amount) as 'Donor Average'
+drom donor d join gift g
+on d.donorno = g.donorno
+groupby d.donorno, dfname, dlname
+having avg(amount) >= 
+(select 2 * avg(amount)
+from gift);
+
+select d.donorno, dfname, dlname, avg(amount) as 'Donor Avg', TwiceOverallAvg
+from donor d, gift g, (select 2 * 
+
+f)
+select donorno, amount
+from gift 
+group by donorno
+having count(amount) = 4;
+
+a)
+select iname, icolor, s.iname, dname
+from item join sale s
+on iname = s.iname
+where icolor is 'brown'
+and dname = 'recreation';
+
+b)
+select iname, dname, delivery#
+from delivery
+group by iname
+having dname not 'books';
+
+c)
+select dname, sale#, iname
+from sale
+group by dname
+having iname not 'Geo positioning system';
+
+d) 
+sale.iname, sale#, delivery#, delivery.iname
+from sale left outer join delivery
+on sale.iname = delivery.iname
+group by delivery.iname
+having sale.iname null;

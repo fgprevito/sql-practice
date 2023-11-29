@@ -1,0 +1,124 @@
+insert: populates the table
+
+insert into Customer values
+(001, 'Casuals', '1355 S. Wormwood', 'Gainesville', 'FL', '32601');
+
+when youre inserting into a table with optional fields...
+
+insert into Product (ProductID, ProductDescription, ProductFinsih, ProductStandardPrice)
+values (1, 'End Table', 'Cherry', 175);
+
+if you have 2 tables of same structure... this copies over customers from Customer to CaCustomer that are from CA
+
+insert into CaCustomer
+select *
+from Customer
+where CustomerState = 'CA';
+
+for auto increment primary key use "Default"
+
+ex. 
+insert into Customer values
+(default, 'Casuals',...);
+
+------------------------------------------------------------------------------
+
+update statement: update in this table, a specific value, where this condition applies
+
+update Product
+set ProductPrice = 775
+where ProductID = 7;
+
+------------------------------------------------------------------------------
+
+delete statement: removes rows from table. like drop or truncate but isnt too severe. Commits data to virtual memory to its possible to back out of this if you want. You can be very precise with what you want to delete too. will run slower but is safer than truncate
+
+delete from Customer
+where CustomerState = 'HI';
+
+delete all rows
+delete from Customer;
+
+------------------------------------------------------------------------------------
+
+select - list columns and expressions that should be returned
+from - which table you want data from
+where - conditions under which row will be included
+group by - indicate categorization of results
+having - indicate conditions under which group will be included
+order by - sort resuts according to specific criteria
+
+----------------------------------------------------------------------------
+
+aggregate functions: count, min, max, avg, sum
+
+---------------------------------------------------------------------------------
+
+logical operators: and, or, not
+
+ex. 
+where cust_state = 'OK' and cust_city = 'Norman'
+where cust_state = 'TX' or cust_state = 'OK'
+where not cust_state = 'CA'
+
+-----------------------------------------------------------------------------------
+
+like operator lets you search wildcard characters
+
+select ProductDescription, ProductFinish, ProductPrice
+from Product
+where (ProductDescription like '%Desk' 
+or ProductDescription like '%Table')
+and ProductPrice > 300;
+
+'%Desk%'
+'Desk%'
+
+------------------------------------------------------------------------------
+
+in specifies set of values to want to comapre
+
+ex. 
+select CustomerName, CustomerCity, CustomerState
+from Customer
+where CustomerState in ('FL', 'TX', 'CA', 'HI');
+
+between... and operator lets you compare continuous range of cahracters, good for dates
+
+select CustomerName, CustomerCity, CustomerState
+from Customer
+where CustomerDOB between '2000-01-01' and '2000-06-30';
+
+------------------------------------------------------------------------------------
+
+is null lets you search for data that isnt there
+
+ex.
+select OrderNumber
+from Orders
+where CustomerNumber is null;
+
+for string search for both is null and '' to find empty strings
+
+ex. 
+where CustomerFirstName is null 
+or CustomerFirstName = '';
+
+--------------------------------------------------------------------------------------
+
+scalar aggregate - single value returned from aggregate function
+vector aggregate - mutliple values returned from aggregate function via group by clause 
+
+group by things that are record level
+group by changes level at which aggregate funcitons operate
+
+sort orders can be mixed (order by CustomerState asc, CustomerName desc)
+
+----------------------------------------------------------------------------------
+
+field alias: 
+select shrfirm as Share Firm', (shrprice * shrqty) as 'Total Value'
+
+concat function - lets you concatonate strings
+select concat(dfname, ' ', dlname) as 'Donor Name'
+from donor;

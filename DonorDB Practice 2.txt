@@ -1,0 +1,54 @@
+select donorno, dlname, dfname, dphone
+from donor
+where donorno = 112;
+
+
+select count(donorno)
+from donor;
+
+
+select donorno, concat(dlname, ', ', dfname) as 'Donor Name'
+from donor;
+
+
+select year, count(distinct donorno) as '# of donors in 2012'
+from gift
+where year = 2012;
+
+
+select year, sum(amount) as 'Total Donated in 2013'
+from gift
+where year = 2013;
+
+
+select avg(amount) as 'Average Amount Donated between 2012 and 2014'
+from gift
+where year between 2012 and 2014;
+
+
+insert into donor values
+(default, 'Francesco', 'Previto', '5553456', 'TX', 'Fort Worth');
+-------------------------------------------------------------------------------
+-- delete from child record first then parent record
+
+delete from gift 
+where donorno = 117;
+
+delete from donor
+where donorno = 117;
+
+
+update donor
+set dphone = '555-1234'
+where dfname = 'Michelle'
+and dlname = 'Dishman';
+
+
+rename table Gift to Donation;
+
+
+delete from Year;
+
+truncate table Year;
+
+drop table Year;

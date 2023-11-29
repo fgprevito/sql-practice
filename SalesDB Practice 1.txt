@@ -1,0 +1,46 @@
+-- A X remember quotations around strings
+
+select *
+from item
+where icolor = 'brown'
+and itype = 'R';
+
+-- B O but remember field aliases for aggregate functions
+
+select iname, count(distinct dname) as '# of Departments'
+from sale
+group by iname
+having count(distinct dname) >= 2;
+
+-- C O
+
+select dname, count(sale#) as '# of Sales'
+from sale
+group by dname
+having count(sale#) >= 4;
+
+-- D X remember paranthesis
+
+select *
+from item
+where (icolor is null 
+or icolor = '');
+
+-- E O
+
+select dname, count(enum) as '# of employees'
+from employee
+group by dname;
+
+select dept.dname, count(enum) as '# of employees'
+from dept left outer join employee
+on dept.dname = employee.dname
+group by dept.dname;
+
+-- F O but if there were any dept had no employees youd be missing dept in data set
+-- use outer join for this issue
+
+select dname, avg(esalary) as 'Average Salaries'
+from employee
+group by dname
+order by avg(esalary) desc;

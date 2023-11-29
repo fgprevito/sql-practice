@@ -1,0 +1,75 @@
+-- shareDB question A
+
+select shrcode, shrfirm
+from shares;
+
+-- B
+
+select *
+from shares
+where shrprice < 15;
+
+-- C, always include primary key and field alias
+
+select shrfirm, shrprice
+from shares
+where price >= 10;
+
+-- D, you can select number of value from select in order by and group by clauses
+
+select shrfirm, shrprice, shrqty, (shrqty * shrprice) as 'Total Value'
+from shares
+order by (shrqty * shrprice) desc;
+
+-- E
+
+select shrfirm, (shrdiv / shrprice) as 'Yeild'
+from shares
+where (shrdiv / shrprice) > .05;
+
+-- F
+
+select (shrdiv * shrqty) as 'Total Div Payment'
+from shares
+where shrfirm = 'Patagonian Tea';
+
+-- G, better to show identifiers and column fo equation so we can eval the result set
+
+select *
+from shares
+where shrprice < (20 * shrdiv);
+
+-- H, remember, ALWAYS INCLUDE PRIMARY KEY AND IDENTIFIER 
+
+select (shrqty * shrprice) as 'Total Value', shrpe
+from shares
+where shrpe > 10;
+
+-- I
+
+select shrcode, shrfirm, sum(shrqty * shrprice) as 'Combined Total Value'
+from shares
+where shrfirm in ('abyssinian Ruby', 'Sri Lankan Gold');
+
+-- J 
+
+select sum(shrdiv / shrprice) 
+from shares
+where shrfirm not in ('Bolivian Sheep', 'Canadian Sugar');
+
+-- K
+
+select sum(shrqty * shrprice) as 'Combined Total Value'
+from shares;
+
+-- L
+
+select *
+from shares
+where shrcode like 'B%';
+
+-- M
+
+select *
+from shares
+where shrfirm like '%Gold%';

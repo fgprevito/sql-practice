@@ -1,0 +1,165 @@
+select shrcode, shrfirm, (shrdiv / shrprice) as 'Yield'
+from shares
+where (shrdiv / shrprice) =
+(select min(shrdiv / shrprice)
+from shares);
+
+
+select shrcode, shrfirm, (shrdiv * shrqty) as 'Dividend Payment'
+from shares
+where (shrdiv * shrqty) = 
+(select max(shrdiv * shrqty)
+from shares);
+
+
+select shrcode, shrfirm, (shrdiv / shrprice) as 'Yield'
+from shares
+where (shrdiv / shrprice) <
+(select avg(shrdiv / shrprice)
+from shares)
+order by shrfirm;
+--------------------------------------------------------------------------------------
+
+select d.donorno, dfname, dlname, amount, year
+from donor d join gift g
+on d.donorno = g.donorno
+and year = 2012
+and amount = 
+(select max(amount)
+from gift
+where year = 2012);
+
+
+select d.donorno, dlname, dfname, sum(amount) as 'Total Amount Donated'
+from donor d left outer join gift g
+on d.donorno = g.donorno
+group by d.donorno, dlname, dfname
+order by dlname, dfname;
+
+
+select dstate, year, sum(amount) as 'Total Donations'
+from donor d join gift g
+on d.donorno = g.donorno
+and year = 2014
+group by dstate;
+
+
+select y.year, yeargoal, sum(amount) as 'Total Donated'
+from year y join gift g
+on y.year = g.year
+group by y.year, yeargoal 
+having sum(amount) > yeargoal;
+
+
+select d.donorno, dfname, dlname, avg(amount) as 'Donor Avg'
+from donor d join gift g
+on d.donorno = g.donorno 
+group by d.donorno, dfname, dlname
+having avg(amount) >= 
+(select (2 * avg(amount))
+from gift);
+
+
+select d.donorno, dlname, dfname, count(distinct year) as '# of donations'
+from donor d join gift g 
+on d.donorno = g.donorno
+group by d.donorno, dlname, dfname
+having count(distinct year) = 
+(select count(*) from year);
+
+-----------------------------------------------------------------------------
+
+select i.iname, icolor, dname
+from item i join sale s 
+on i.iname = s.iname
+and icolor = 'brown'
+and dname = 'recreation';
+
+
+select *
+from item
+where iname not in 
+(select distinct iname
+from delivery
+where dname = 'books');
+
+
+select *
+from dept
+where dname not in 
+(select distinct iname
+from sale
+where iname = 'Geo positioning system');
+
+
+select distinct iname
+from delivery
+where iname not in 
+(select distinct iname 
+from sale);
+
+
+select ename, esalary
+from employee
+where esalary
+(select max(esalary)
+from employee);
+
+
+select ename, esalary
+from employee
+where esalary <
+(select avg(esalary)
+from employee);
+
+
+select i.iname, icolor, itype, count(saleqty) as 'Quantity Sold'
+from item i left outer join sale s
+on i.iname = s.iname 
+group by i.iname, icolor, itype;
+
+
+select count(distinct sale#) as '# of different sales'
+from sale s join item i 
+on s.iname = i.iname
+join delivery d 
+on i.iname = d.iname
+and supplier# = 101;
+
+
+select *
+from employee
+where dname in
+(select distinct dname
+from sale s join item i
+on s.iname = i.iname
+and (icolor is null
+or icolor = ''));
+
+
+select e.empfname, b.empfname, e.deptname, b.deptname
+from emp e join boss b
+on e.boss = b.empno
+and e.deptname = b.deptname;
+
+
+select deptname, avg(empsalary) as 'Avg Salary'
+from emp 
+where empno not in
+(select distinct boss from emp)
+group by deptname
+having avg(empsalary) > 25000;
+
+
+select distinct deptname
+from emp
+where deptname not in
+(select distinct e.deptname
+from emp e join emp b
+on e.boss = b.empno
+and e.empsalary > b.empsalary);
+
+
+select e.empfname, b.empfname
+from emp e join emp b
+on 

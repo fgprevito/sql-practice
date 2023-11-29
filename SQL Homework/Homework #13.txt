@@ -1,0 +1,49 @@
+a)
+select IColor, IType
+from Item
+where IColor = 'brown'
+and IType = 'R';
+
+b) 
+select Sale#, IName, count(distinct DName) as 'Number of Depts'
+from Sale
+group by IName
+having count(DName) >= 2;
+
+something record level with aggegate level should have group by. Group by the record level criteria
+
+c)
+select DName, SaleQty
+from Sale
+where SaleQty >= 4;
+
+select dname, count(sale#) as '# of sales'
+from sale
+group by dname
+having count(sale#) >= 4;
+
+d)
+select IName, IColor
+from Item
+where (IColor is null
+or icolor = '');
+
+e)
+select count(ENum) as 'Number of Employees', DName
+from Employee
+group by DName;
+
+double asteriks is about maybe some dept dont have employees so data wouldnt be whole story if we coded this way 
+
+f)
+select avg(ESalary) as 'Average Salaries by Department', DName
+from Employee
+group by DName
+order by avg(ESalary) desc;
+
+
+a)
+select avg(empsalary) as 'Average Salary', deptname
+from emp
+group by deptname
+having avg(empsalary) > 35000;

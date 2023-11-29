@@ -1,0 +1,33 @@
+create table shares (
+shrcode varchar(3) not null,
+shrfirm varchar(25) not null,
+shrprice decimal(6,2) not null,
+shrqty integer not null,
+shrdiv decimal(4,2) not null,
+shrpe integer not null,
+constraint Shares_PK primary key (shrcode));
+
+-- create donor table
+create table donor (
+donorno integer not null,
+dlname varchar(15) not null,
+dfname varchar(15) not null,
+dphone varchar(10) not null,
+dstate char(2) not null,
+dcity varchar(20) not null,
+constraint Donor_PK primary key (donorno));
+
+-- create year table
+create table year (
+year integer not null,
+yeargoal integer not null,
+constraint Year_PK primary key (year));
+
+-- create gift table
+create table gift (
+donorno integer not null,
+year integer not null,
+amount integer not null,
+constraint Gift_PK primary key (donorno, year),
+constraint Gift_FK1 foreign key (donorno) references donor(donorno) on delete cascade,
+constraint Gift_FK2 foreign key (year) references year(year) on delete cascade);

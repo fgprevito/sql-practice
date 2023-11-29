@@ -1,0 +1,34 @@
+a)
+select empno, empfname, deptname, boss
+from emp
+where empno = boss
+and deptname is true;
+
+b)
+select empno, avg(empsalary) as 'AvgSalary', deptname, boss
+from emp
+where empno != boss
+group by deptname
+having avg(empsalary) > 25000;
+
+c)
+select distinct deptname
+from emp, (select empno, boss
+	   from emp
+	   where empno != boss) b
+group by deptname 
+having empsalary < b.empsalary;
+
+d)
+select empfname, empsalary, deptname
+from emp
+where deptname = 'Marketing'
+and empsalary > 25000;
+
+e)
+select empfname, empsalary
+from emp
+where empsalary >
+(select empsalary, deptname
+from emp
+where deptname = 'Marketing');

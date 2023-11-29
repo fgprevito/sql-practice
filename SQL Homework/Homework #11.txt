@@ -1,0 +1,43 @@
+i)
+select shrfirm as 'Firm Name', sum(shrqty * shrprice) as 'Combined Total Value'
+from shares
+where shrfirm = 'Abyssinian Ruby' or shrfirm = 'Sri Lankan Gold'
+
+j)
+select shrcode as 'Share Code', shrfirm as 'Firm Name', sum(shrdiv/shrprice) as 'Combined Total Yield'
+from shares
+where shrfirm != 'Bolivian Sheep' and shrfirm != 'Canadian Sugar'
+
+where shrfirm not in ('Bolivian Sheep', 'Canadian Sugar')
+
+k) 
+select shrcode as 'Share Code', shrfirm as 'Firm Name', sum(shrqty * shrprice) as 'Combined Total Value'
+from shares;
+
+l)
+select shrcode as 'Share Code', shrfirm as 'Firm Name'
+from shares
+where shrcode like 'B%';
+
+m)
+select shrfirm as 'Firm Name'
+from shares
+where shrfirm like '%Gold%';
+
+a)
+select donorno as 'Donor Number', dphone as 'Phone Number'
+from donor
+where donorno = 112;
+
+b) 
+select *
+from donor
+group by donorno
+having count(donorno);
+
+select count(dlname) as '# of donors'
+from donor;
+
+c)
+select donorno as 'Donor Number', concat(dlname, ', ', dfname) as 'Donor Name'
+from donor;

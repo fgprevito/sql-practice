@@ -1,0 +1,45 @@
+a)
+select shrfirm, (shrdiv / shrprice) as 'Yield'
+from shares
+where min(shrdiv / shrprice);
+
+b)
+select shrfirm, (shrdiv * shrqty) as 'Maximum Total Dividend Payment'
+from shares
+where max(shrdiv * shrqty);
+
+c)
+select shrfirm, (shrdiv / shrprice) as 'Yield'
+from shares
+group by shrfirm
+having (shrdiv / shrprice) < avg(shrdiv / shrprice)
+order by shrfirm;
+
+a) select d.donorno, dfname, dlname, g.donorno, amount
+from donor d join gift g
+on d.donorno = g.donorno
+and max(amount);
+
+b) 
+select d.donorno, dlname, dfname, g.donorno, sum(amount) as 'Total amount'
+from donor d join gift g 
+on d.donorno = g.donorno
+group by dlname 
+having sum(amount);
+
+c)
+select d.donorno, state, g.donorno, sum(amount) as 'Total donations'
+from donor d join gift g
+on d.donorno = g.donorno
+group by state
+having sum(amount);
+
+d)
+select y.year, yeargoal, g.year, sum(amount) as 'Total donated'
+from year y join gift g
+on y.year = g.year
+group by year
+having sum(amount) > yeargoal;
+
+
+

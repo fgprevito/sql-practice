@@ -1,0 +1,96 @@
+e)
+select ename, esalary
+from employee
+where esalary =
+(select max(esalary)
+from employee);
+
+f) 
+#good enough for exam
+select enum, ename, esalary
+from employee
+where esalary < 
+(select avg(esalary)
+from employee);
+
+#lets you see comparison point
+select enum, ename, esalary, AvgSalary
+from employee, (select avg(esalary) as 'AvgSalary'
+from employee) x
+where esalary < AvgSalary; 
+
+g)
+select i.*, sum(saleqty) as 'Total Sold'
+from item i left outer join sale s
+on i.iname = s.iname
+group by i.iname, icolor, itype;
+
+h)
+#joins are more efficienct than subquery
+select count(sale#) as 'Number of Sales'
+from sale s
+join item i on i.iname = s.iname
+join delivery d on i.iname = d.iname
+and supplier# = 101;
+
+i) 
+#wrong because we are aggregating on the one side instead of the many side
+#subject to multiplicative effect of the join
+select avg(esalary) as 'Average Salary'
+from employee e
+join dept d on e.dname = d.dname
+join sales s on d.dname = s.dname
+join item i on s.iname = i.iname
+and (icolor is null
+or icolor = '');
+
+#fix: dont join it
+select avg(esalary) as 'Average Salary'
+from employee
+where dname in
+(select distinct dname
+from sale s 
+join item i on s.iname = i.iname
+and (icolor is null
+or icolor = ''));
+
+#if aggregating and joining there is potential for problem
+#ask where is the aggregation? on the one or many side?
+#if its on many side its fine, only a problme on the one side
+#solution: if count, just use distinct. if avg, use subquery
+
+j)
+select ename, dname, esalary
+from employee e
+group by dname
+having esalary > 
+(select avg(esalary)
+from employee
+where dname = e.dname)
+order by ename, dname, esalary;
+
+#correlated subquery approach
+#bad for processing efficiency
+select ename, dname, esalary
+from employee e
+where esalary >
+(select avg(esalary)
+from employee
+where dname = e.dname);
+
+#slightly better way that shows departmental avg in question 
+#derived table approach
+select ename, dname, esalary, DeptAvg
+from employee e, (select dname, avg(esalary) as 'DeptAvg'
+		  from employee
+		  group by dname) x
+where e.dname = x.dname
+and esalary > DeptAvg;
+
+select ename, dname, esalary, DeptAvg
+from employee e 
+join (select dname, avg(esalary) as 'DeptAvg'
+from employee
+group by dname) x
+on e.dname = x.dname
+and esalary > DeptAvg;

@@ -1,0 +1,41 @@
+select *
+from item
+where icolor = 'brown'
+and itype = 'R';
+
+
+select iname, count(distinct dname) as '# of departments'
+from sale
+group by iname
+having count(distinct dname) >= 2;
+
+
+select dname, count(sale#) as '# of sales'
+from sale
+group by dname
+having count(sale#) >= 4;
+
+
+select *
+from item
+where (icolor is null
+or icolor = '';)
+
+
+select dname, count(enum)
+from dept d left outer join employee e
+on d.dname = e.dname
+group by dname;
+
+
+select dname, avg(esalary)
+from dept d left outer join employee e
+on d.dname = e.dname
+group by dname
+order by 2 desc;
+
+
+select deptname, avg(empsalary) as 'Avg Salary'
+from emp
+group by deptname
+having avg(empsalary) > 35000;
